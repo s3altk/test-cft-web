@@ -1,0 +1,37 @@
+﻿@model TestCft.Models.App
+
+<div class="modal-header">
+    <h5 class="modal-title">
+        @Model.Name
+        <small class="text-muted">App</small>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="created">Creation date</label>
+            <h6 id="created" class="display">@(!Model.Created.HasValue ? "No data" : Model.Created.Value.ToShortDateString())</h6>
+        </div>
+        <div class="form-group">
+            <label for="reqs">Requests</label>
+                @if (Model.Requests.Count != 0)
+                {
+                    <dl id="reqs" class="row">
+                        @foreach (var item in Model.Requests)
+                        {
+                            <dt class="col-4">From: @item.Email</dt>
+                            <dd class="col-8">@item.Name</dd>
+                        }
+                    </dl>
+                }
+            else
+            {
+                <h6 id="reqs" class="display">No data</h6>
+            }
+        </div>
+    </form>
+</div>

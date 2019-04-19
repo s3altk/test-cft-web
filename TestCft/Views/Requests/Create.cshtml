@@ -1,0 +1,71 @@
+﻿@model TestCft.Models.Request
+
+@{
+    ViewData["Title"] = "New request";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-secondary active" href="@Url.Action("Get", new { page = 1 })">Back to requests</a>
+
+<div class="grid row">
+    <div class="col">
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Request name</label>
+                <input id="name" class="form-control" type="text" placeholder="Enter name" name="Name" value="@Model?.Name">
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                <label for="app">App</label>
+                <select id="app" class="selectpicker form-control" data-style="btn-primary" data-live-search="true" name="AppId">
+                    @foreach (var item in ViewBag.Apps)
+                    {
+                        if (item.Id == Model?.AppId)
+                        {
+                            <option selected value="@item.Id">@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    }
+                </select>
+                <small class="form-text text-muted">The first item in the list is selected by default.</small>
+                @Html.ValidationMessageFor(m => m.AppId)
+            </div>
+            <div class="form-group">
+                <label for="finished">Development finish date</label>
+                <input id="finished" class="form-control" type="text" name="Finished" value="@Model?.Finished.ToShortDateString()">
+                @Html.ValidationMessageFor(m => m.Finished)
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" class="form-control" type="text" placeholder="example@mail.com" name="Email" value="@Model?.Email">
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="form-group">
+                <label for="desc">Description (optional)</label>
+                <textarea id="desc" class="form-control" rows="3" placeholder="Enter some text" name="Description">@Model?.Description</textarea>
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Create</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.rawgit.com/FreddyFY/material-datepicker/1.0.5/dist/material-datepicker.min.js"></script>
+<script>
+
+    var materialPicker = new MaterialDatepicker('#finished', {
+        weekBegin: 'monday',
+        outputFormat: 'DD.MM.YYYY',
+        orientation: "portrait"
+    });
+
+    document.querySelector('#finished').addEventListener('click', function () {
+        materialPicker.open();
+    })
+
+</script>

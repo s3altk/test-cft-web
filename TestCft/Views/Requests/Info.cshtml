@@ -1,0 +1,40 @@
+﻿@model TestCft.Models.Request
+
+<div class="modal-header">
+    <h5 class="modal-title">Request #@Model.Id</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="name">Request name</label>
+            <h6 id="name" class="display">@Model.Name</h6>
+        </div>
+        <div class="form-group">
+            <label for="app">App</label>
+            <h6 id="app" class="display">@Model.App.Name</h6>
+        </div>
+        <div class="form-group">
+            <label for="finished">Development finish date</label>
+            <h6 id="finished" class="display">@Model.Finished.ToShortDateString()</h6>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <h6 id="email" class="display">@Model.Email</h6>
+        </div>
+        <div class="form-group">
+            <label for="desc">Description</label>
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <textarea id="desc" class="form-control" rows="3" readonly>@Model.Description</textarea>
+            }
+            else
+            {
+                <h6 id="desc" class="display">No data</h6>
+            }
+        </div>
+    </form>
+</div>
