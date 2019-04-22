@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Globalization;
 using TestCft.Models;
 
 namespace TestCft
@@ -23,6 +27,20 @@ namespace TestCft
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<DbModel>(options => options.UseSqlServer(connectionString));
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var cultures = new List<CultureInfo>()
+                {
+                    CultureInfo.CreateSpecificCulture("de-DE")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("de-DE");
+
+                options.SupportedCultures = cultures;
+
+                options.SupportedUICultures = cultures;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -31,6 +49,10 @@ namespace TestCft
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+
+            app.UseRequestLocalization(options.Value);
 
             app.UseStaticFiles();
 
