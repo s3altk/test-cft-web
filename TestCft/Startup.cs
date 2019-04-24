@@ -32,10 +32,10 @@ namespace TestCft
             {
                 var cultures = new List<CultureInfo>()
                 {
-                    CultureInfo.CreateSpecificCulture("de-DE")
+                    CultureInfo.CreateSpecificCulture("ru-RU")
                 };
 
-                options.DefaultRequestCulture = new RequestCulture("de-DE");
+                options.DefaultRequestCulture = new RequestCulture("ru-RU");
 
                 options.SupportedCultures = cultures;
 
